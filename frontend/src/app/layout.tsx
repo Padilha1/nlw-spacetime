@@ -14,13 +14,16 @@ const baiJamJuree = BaiJamJuree({
 
 export const metadata = {
   title: "NLW Spacetime",
-  description: "A capsula do tempo que voce precisava para guardar suas melhores memorias",
+  description:
+    "A capsula do tempo que voce precisava para guardar suas melhores memorias",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${roboto.variable} ${baiJamJuree.variable} bg-gray-900 font-sans text-gray-100`}>
+    <html lang="pt-br">
+      <body
+        className={`${roboto.variable} ${baiJamJuree.variable} bg-gray-900 font-sans text-gray-100`}
+      >
         {children}
       </body>
     </html>

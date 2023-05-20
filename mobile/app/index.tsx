@@ -1,6 +1,11 @@
+import { useEffect } from "react";
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
-
+import { styled } from "nativewind";
+import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
+import { api } from "../src/lib/api";
+import * as SecureStore from "expo-secure-store";
 import {
   useFonts,
   Roboto_400Regular,
@@ -9,14 +14,51 @@ import {
 
 import { BaiJamjuree_700Bold } from "@expo-google-fonts/bai-jamjuree";
 
-import blurBg from "./src/assets/bg-blur.png";
-import Stripes from "./src/assets/stripes.svg";
-import NlwLogo from "./src/assets/nlw-spacetime.svg";
-import { styled } from "nativewind";
+import blurBg from "../src/assets/bg-blur.png";
+import Stripes from "../src/assets/stripes.svg";
+import NlwLogo from "../src/assets/nlw-spacetime.svg";
+
+const discovery = {
+  authorizationEndpoint: "https://github.com/login/oauth/authorize",
+  tokenEndpoint: "https://github.com/login/oauth/access_token",
+  revocationEndpoint:
+    "https://github.com/settings/connections/applications/be6553f4bfe2e64fe416",
+};
 
 const StyledStripes = styled(Stripes);
 
 export default function App() {
+  const router = useRouter();
+  const [, response, signInWithGithub] = useAuthRequest(
+    {
+      clientId: "be6553f4bfe2e64fe416",
+      scopes: ["identity"],
+      redirectUri: makeRedirectUri({
+        scheme: "nlwspacetime",
+      }),
+    },
+    discovery
+  );
+
+  async function handleGithubOAuthCode(code: string) {
+    const response = await api.post("/register", {
+      code,
+    });
+    const { token } = response.data;
+
+    await SecureStore.setItemAsync("token", token);
+    router.push('/memories')
+  }
+
+  useEffect(() => {
+    console.log(response);
+    if (response?.type === "success") {
+      const { code } = response.params;
+
+      handleGithubOAuthCode(code);
+    }
+  }, [response]);
+
   const [hasLoadedFonts] = useFonts({
     Roboto_400Regular,
     Roboto_700Bold,
@@ -50,6 +92,9 @@ export default function App() {
         <TouchableOpacity
           activeOpacity={0.5}
           className="rounded-full bg-green-500 px-5 py-3"
+          onPress={() => {
+            signInWithGithub();
+          }}
         >
           <Text className="font-alt text-sm uppercase text-black">
             {" "}
