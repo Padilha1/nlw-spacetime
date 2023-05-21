@@ -1,21 +1,9 @@
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
-import { styled } from "nativewind";
+import { Text, TouchableOpacity, View } from "react-native";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { api } from "../src/lib/api";
 import * as SecureStore from "expo-secure-store";
-import {
-  useFonts,
-  Roboto_400Regular,
-  Roboto_700Bold,
-} from "@expo-google-fonts/roboto";
-
-import { BaiJamjuree_700Bold } from "@expo-google-fonts/bai-jamjuree";
-
-import blurBg from "../src/assets/bg-blur.png";
-import Stripes from "../src/assets/stripes.svg";
 import NlwLogo from "../src/assets/nlw-spacetime.svg";
 
 const discovery = {
@@ -25,7 +13,6 @@ const discovery = {
     "https://github.com/settings/connections/applications/be6553f4bfe2e64fe416",
 };
 
-const StyledStripes = styled(Stripes);
 
 export default function App() {
   const router = useRouter();
@@ -59,24 +46,12 @@ export default function App() {
     }
   }, [response]);
 
-  const [hasLoadedFonts] = useFonts({
-    Roboto_400Regular,
-    Roboto_700Bold,
-    BaiJamjuree_700Bold,
-  });
-
-  if (!hasLoadedFonts) {
-    return null;
-  }
+ 
 
   return (
-    <ImageBackground
-      source={blurBg}
-      className="relative flex-1 items-center bg-gray-900 px-8 py-10"
-      imageStyle={{ position: "absolute", left: "-100%" }}
-    >
-      <StyledStripes className="absolute left-2" />
-
+    <View
+      className=" flex-1 items-center  px-8 py-10"
+    >   
       <View className="flex-1 items-center justify-center gap-6">
         <NlwLogo />
 
@@ -98,7 +73,7 @@ export default function App() {
         >
           <Text className="font-alt text-sm uppercase text-black">
             {" "}
-            CADASTRAR lembranÇa{" "}
+            Cadastrar lembrança{" "}
           </Text>
         </TouchableOpacity>
       </View>
@@ -107,7 +82,6 @@ export default function App() {
         Feito com 💜 no NLW da Rocketseat
       </Text>
 
-      <StatusBar style="light" translucent />
-    </ImageBackground>
+    </View>
   );
 }
