@@ -18,10 +18,7 @@ export default function EditMemory() {
       <button onClick={handleDelete}>
         <Trash className="text-red-500" />
       </button>
-
-        
-
-
+      
     </div>
   );
 }
