@@ -23,6 +23,7 @@
 - ESlint
 - SQLite
 - Fastify
+- Zod
 
 ## Funcionalidades
 
