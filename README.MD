@@ -4,8 +4,6 @@
 
 <br>
 
-# 🛠🛠🛠 Em construção 🛠🛠🛠
-
 ## Índice
 
 - <a href="Tecnologias Utilizadas"> Tecnologias </a>
